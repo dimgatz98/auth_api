@@ -1,0 +1,20 @@
+{
+  "name": "microlab_auth_api",
+  "version": "1.0.0",
+  "description": "jwt auth",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-validator": "^6.14.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.2",
+    "mysql": "^2.18.1"
+  }
+}
