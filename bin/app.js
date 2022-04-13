@@ -2,6 +2,8 @@ require('dotenv').config();
 
 const moment = require('moment')
 
+const CronJob = require('cron').CronJob;
+
 const bcrypt = require('bcryptjs');
 
 const bodyParser = require("body-parser");
@@ -27,6 +29,36 @@ const port = process.env.PORT || 3333;
 const db = process.env.DB;
 
 app.use(bodyParser.json());
+
+const cronExpression ="0 * * * *";
+
+const cronJob = new CronJob(
+    cronExpression,
+    cronFunction
+);
+
+function cronFunction() {
+    const now = moment().format('YYYY-MM-D HH:mm:ss');
+
+    pool.query(`select * from ${db}.users`, (err, users) => {
+        if (err) throw err;
+
+        for (const user of users) {
+            pool.query(`select datetime from ${db}.schedule where user_id=? and datetime=?`, [user.id, now], (_, results) => {
+                if (results.length == 0) {
+                    // Probably somehow check is resource is already reserved
+                    console.log("Resource freed for user:", user.id);
+                }
+
+            });
+        }
+    });
+}
+
+const nextDates = cronJob.nextDates(10);
+console.log("Next dates the job will run on:", nextDates.map(d => d.format("YYYY-MM-DD HH:mm")));
+
+cronJob.start();
 
 app.get('/api', (req, res) => {
     res.json({
@@ -214,6 +246,11 @@ function validateEmail(x) {
 
 function nextDay(date) {
     return date + " 23:59:59";
+}
+
+function nextHour (datetime) {
+    const hours = (parseInt(datetime.split(":")[2]) + 1) % 24;
+    return datetime.split(":")[0]+datetime.split(":")[1]+hours.toString();
 }
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
