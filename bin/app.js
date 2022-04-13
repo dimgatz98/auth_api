@@ -99,9 +99,19 @@ app.get('/api/start', verifyTokenMiddleware, (req, res) => {
         if (err) {
             res.sendStatus(403);
         } else {
+            const now = nullifyMinsAndSecs(moment().format('YYYY-MM-D HH:mm:ss'));
             const user_id = authData.user[0].id;
-            pool.query(`select * from ${db}.schedule where user_id=? and datetime=?`, [user_id, nullifyMinsAndSecs(moment().format('YYYY-MM-D hh:mm:ss'))], (err, result) => {
+
+            console.log(now);
+
+            pool.query(`select * from ${db}.schedule where user_id=? and datetime=?`, [user_id, now], (err, result) => {
                 if (result.length > 0) {
+                    pool.query(`delete from ${db}.schedule where datetime=?`, [now], (err) => {
+                        if (err) throw err;
+
+                        console.log('Reservation for datetime:', now, "and user:", user_id, "deleted.");
+                    });
+
                     res.json({
                         message: "You're in"
                     });
@@ -147,7 +157,7 @@ function isTwoDaysLater(datetime) {
     return (
         parseDaysFromDatetime(datetime)
         -
-        parseDaysFromDatetime(moment().format('YYYY-MM-D hh:mm:ss')) >= waitDays
+        parseDaysFromDatetime(moment().format('YYYY-MM-D HH:mm:ss')) >= waitDays
     )
 }
 

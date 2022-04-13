@@ -14,6 +14,8 @@ $ nvm ls-remote
 $ nvm install node
 # and use this version with:
 $ nvm use
+# Install npm
+$ nvm install-latest-npm
 ```
 
 ## Setup MySQL:
