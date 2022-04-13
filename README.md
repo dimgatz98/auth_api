@@ -44,16 +44,22 @@ Create databases and tables:
 
 > select * from users;
 
+> delete from users where id=1;
+
 > create table schedule (user_id int NOT NULL, datetime datetime NOT NULL UNIQUE, foreign key(user_id) references users(id));
 
 > insert into schedule (user_id, datetime) values (1, '2022-4-12 18:20:00');
 ```
+---
+## Managing users with users_cli
+
+You can manage the users in database with the users_cli. You can find the users_cli along with a tutorial [here](https://github.com/dimgatz98/auth_api/tree/master/users_cli)
 
 ---
 
 ## Auth api demo
 
-First, create a .env file in the base directory of the project and add the following env variables:
+First, create a .env file in the top-level directory of the project and add the following env variables:
 ```
 # .env
 PASSWORD="<your_my_sql_password>"
