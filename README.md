@@ -76,7 +76,7 @@ Create databases and tables:
 ---
 ## Managing users with users_cli
 
-You can manage the users in database with the users_cli. You can find the users_cli along with a tutorial [here](https://github.com/dimgatz98/auth_api/tree/master/users_cli)
+You can manage the users in database with the users_cli. You can find the users_cli along with a tutorial [here](https://github.com/dimgatz98/auth_api/tree/master/users_cli).
 
 ---
 
@@ -103,3 +103,8 @@ $ npm install nodemon -g
 ``` bash
 $ nodemon
 ```
+
+### Api cli:
+Now you can use the app_cli to automatically contact the server.
+You can find the app cli as well as a quick tutorial [here](https://github.com/dimgatz98/auth_api/tree/master/app_cli).
+
