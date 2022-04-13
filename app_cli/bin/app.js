@@ -53,7 +53,7 @@ yargs.command({
 yargs.command({
     command: 'reserve',
     describe: `Datetime to reserve the resource
-    --datetime, datetime for the resource to be reserved in the form YYYY-MM-D HH:00:00
+    --datetime, datetime for the resource to be reserved in the form YYYY-MM-DD HH:00:00
     --token, your authorization token
     `,
     builder: {
@@ -133,6 +133,53 @@ yargs.command({
               console.log(error.config);
         });
     }
+});
+
+yargs.command({
+  command: 'list',
+  describe: `List all reservations for certain date
+  --token, your authorization token
+  --date, the date you would like to list the reservations for in the format YYYY-MM-DD
+  `,
+  builder: {
+      token: {
+          describe: 'Token',
+          demandOption: true,
+          type: 'string'
+      },
+      date: {
+          describe: 'date',
+          demandOption: true,
+          type: 'string'
+      }
+  },
+
+  handler(argv) {
+      const token = argv.token;
+      const date = argv.date;
+
+      const payload = {date: date}
+
+      axios.post(`http://localhost:${port}/api/datetime/list`, data = payload, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          }
+        }).then(resp => {
+
+          console.log(resp.data);
+      }).catch(function (error) {
+          if (error.response) {
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            } else if (error.request) {
+              console.log(error.request);
+            } else {
+              console.log('Error', error.message);
+            }
+            console.log(error.config);
+      });
+  }
 });
 
 yargs.parse();

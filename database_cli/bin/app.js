@@ -17,6 +17,15 @@ const pool = createPool({
 
 const bcrypt = require('bcryptjs');
 const { exit } = require('yargs');
+const res = require('express/lib/response');
+
+function validateDatetime (datetime) {
+    var regex = new RegExp('^([1-2]\\d{3}-([0]?[1-9]|1[0-2])-([0-2]?[0-9]|3[0-1])) (20|21|22|23|[0-1]?\\d{1}):00:00$');
+    if (!regex.test(datetime)) {
+        return false;
+    }
+    return true;
+}
 
 const usage = "\nUsage: add or remove users from your mysql database";
 
@@ -103,6 +112,42 @@ yargs.command({
                     if (err) throw err;
 
                     console.log("User deleted successfuly");
+                    exit(0);
+                });
+            }
+        });
+    }
+});
+
+yargs.command({
+    command: 'unschedule',
+    describe: `Removes reservation from database
+        --datetime, Schedule's datetime
+    `,
+    builder: {
+        datetime: {
+            describe: `Reservations datetime`,
+            demandOption: true,
+            type: 'string'
+        }
+    },
+
+    handler(argv) {
+        const datetime = argv.datetime;
+        if (!validateDatetime(datetime) ) {
+            exit(0);
+        }
+        pool.query(`select datetime from ${db}.schedule where datetime=?`, [datetime], (err, results) => {
+            if (err) throw err;
+
+            if (results.length == 0) {
+                console.log("Datetime not reserved");
+                exit(0);
+            } else {
+                pool.query(`delete from ${db}.schedule where datetime=?`, [datetime], (err) => {
+                    if (err) throw err;
+
+                    console.log("Datetime successfuly deleted");
                     exit(0);
                 });
             }

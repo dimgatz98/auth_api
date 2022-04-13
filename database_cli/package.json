@@ -1,5 +1,5 @@
 {
-  "name": "users_cli",
+  "name": "database_cli",
   "version": "1.0.0",
   "description": "simple cli for inserting users into mysql db",
   "main": "bin/app.js",
@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "bin": {
-    "users_cli": "./bin/app.js"
+    "database_cli": "./bin/app.js"
   },
   "dependencies": {
     "dotenv": "^16.0.0",

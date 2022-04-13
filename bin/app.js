@@ -102,8 +102,6 @@ app.get('/api/start', verifyTokenMiddleware, (req, res) => {
             const now = nullifyMinsAndSecs(moment().format('YYYY-MM-D HH:mm:ss'));
             const user_id = authData.user[0].id;
 
-            console.log(now);
-
             pool.query(`select * from ${db}.schedule where user_id=? and datetime=?`, [user_id, now], (err, result) => {
                 if (result.length > 0) {
                     pool.query(`delete from ${db}.schedule where datetime=?`, [now], (err) => {
@@ -119,6 +117,30 @@ app.get('/api/start', verifyTokenMiddleware, (req, res) => {
                     res.sendStatus(403);
                 }
             });
+        }
+    });
+});
+
+app.post('/api/datetime/list', verifyTokenMiddleware, (req, res) => {
+    jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
+        if (err) {
+            res.sendStatus(403);
+        } else {
+            const date = req.body.date;
+            if (!validateDate(date) ) {
+                res.json({
+                    message: "Invalid date"
+                });
+            } else {
+                pool.query(`select datetime from ${db}.schedule where datetime>=? and datetime<=?`, [date, nextDay(date)], (err, result) => {
+                    if (err) throw err;
+
+                    res.json({
+                        message: result
+                    });
+                });
+            }
+
         }
     });
 });
@@ -141,6 +163,14 @@ function verifyTokenMiddleware(req, res, next) {
 
 function validateDatetime(date) {
     var regex = new RegExp('^([1-2]\\d{3}-([0]?[1-9]|1[0-2])-([0-2]?[0-9]|3[0-1])) (20|21|22|23|[0-1]?\\d{1}):00:00$');
+    if (!regex.test(date)) {
+        return false;
+    }
+    return true;
+}
+
+function validateDate(date) {
+    var regex = new RegExp('^([1-2]\\d{3}-([0]?[1-9]|1[0-2])-([0-2]?[0-9]|3[0-1]))$');
     if (!regex.test(date)) {
         return false;
     }
@@ -180,6 +210,10 @@ function validateEmail(x) {
         return false;
     }
     return true;
+}
+
+function nextDay(date) {
+    return date + " 23:59:59";
 }
 
 app.listen(port, () => console.log(`Server started on port ${port}`));

@@ -2,7 +2,7 @@
 
 1. Ubuntu
 
-2. nodejs (node and npm)
+2. nodejs (node v16.13.2 and npm 8.4.1)
 
 ## Install node and npm:
 ``` bash
@@ -12,7 +12,7 @@ $ wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh
 $ nvm ls-remote
 # Install node
 $ nvm install node
-# and use this version with:
+# you can also specify version and use this version with the following command
 $ nvm use
 # Install npm
 $ nvm install-latest-npm
@@ -74,9 +74,9 @@ Create databases and tables:
 
 ```
 ---
-## Managing users with users_cli
+## Managing users and schedules with database_cli
 
-You can manage the users in database with the users_cli. You can find the users_cli along with a tutorial [here](https://github.com/dimgatz98/auth_api/tree/master/users_cli).
+You can manage the users and schedules in database with the database_cli. You can find the database_cli along with a tutorial [here](https://github.com/dimgatz98/auth_api/tree/master/database_cli).
 
 ---
 

@@ -1,4 +1,4 @@
 node_modules
 .env
-users_cli/node_modules
+database_cli/node_modules
 app_cli/node_modules
