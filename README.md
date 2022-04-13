@@ -10,9 +10,9 @@
 $ wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh
 # List available node versions
 $ nvm ls-remote
-# Install the version you would like like that
-$ nvm install 0.10
-# and use this version
+# Install node
+$ nvm install node
+# and use this version with:
 $ nvm use
 ```
 
@@ -95,6 +95,7 @@ DAYS="<number_of_days_before_starting>" # default = 2
 ### Install modules with:
 ``` bash
 $ npm install
+$ npm install nodemon -g
 ```
 ### and start with:
 ``` bash
