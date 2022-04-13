@@ -55,9 +55,6 @@ function cronFunction() {
     });
 }
 
-const nextDates = cronJob.nextDates(10);
-console.log("Next dates the job will run on:", nextDates.map(d => d.format("YYYY-MM-DD HH:mm")));
-
 cronJob.start();
 
 app.get('/api', (req, res) => {
