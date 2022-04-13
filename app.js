@@ -22,6 +22,7 @@ const pool = createPool({
 
 const app = express();
 
+const waitDays = process.env.DAYS || 2;
 const port = process.env.PORT || 3333;
 const db = process.env.DB;
 
@@ -146,7 +147,7 @@ function isTwoDaysLater(datetime) {
     return (
         parseDaysFromDatetime(datetime)
         -
-        parseDaysFromDatetime(moment().format('YYYY-MM-D hh:mm:ss')) >= 2
+        parseDaysFromDatetime(moment().format('YYYY-MM-D hh:mm:ss')) >= waitDays
     )
 }
 
