@@ -1,3 +1,16 @@
+**Prerequisites for the api:**
+
+1. Ubuntu
+
+2. nodejs (node and npm)
+
+## Install node and npm:
+``` bash
+$ sudo apt-get install python-software-properties
+$ curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash –
+$ sudo apt-get install nodejs
+```
+
 ## Setup MySQL:
 
 ``` bash
