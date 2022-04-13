@@ -25,7 +25,7 @@ In MySQL:
 > exit
 ```
 
-Login from shell like that:
+Login from shell with:
 ``` bash
 $ mysql -u username -p
 ```
