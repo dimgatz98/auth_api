@@ -6,9 +6,14 @@
 
 ## Install node and npm:
 ``` bash
-$ sudo apt-get install python-software-properties
-$ curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash –
-$ sudo apt-get install nodejs
+# Install nvm
+$ wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh
+# List available node versions
+$ nvm ls-remote
+# Install the version you would like like that
+$ nvm install 0.10
+# and use this version
+$ nvm use
 ```
 
 ## Setup MySQL:
@@ -57,11 +62,14 @@ Create databases and tables:
 
 > select * from users;
 
-> delete from users where id=1;
-
 > create table schedule (user_id int NOT NULL, datetime datetime NOT NULL UNIQUE, foreign key(user_id) references users(id));
 
 > insert into schedule (user_id, datetime) values (1, '2022-4-12 18:20:00');
+
+> delete from schedule where user_id=1;
+
+> delete from users where id=1;
+
 ```
 ---
 ## Managing users with users_cli
