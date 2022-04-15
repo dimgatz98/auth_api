@@ -1,5 +1,7 @@
 #! /usr/bin/env node
 
+const moment = require('moment')
+
 const axios = require('axios');
 
 const yargs = require("yargs");
@@ -150,10 +152,21 @@ yargs.command({
             'Authorization': `Bearer ${token}`,
           }
         }).then(resp => {
-
-          console.log(resp.data);
+          const reservations = [];
+          for (d of resp.data.message){
+            var hours = ((parseInt(moment.utc(d.datetime).format("HH")) + 3) % 24).toString();
+            if (hours.length == 1) {
+              hours = "0" + hours;
+            }
+            const minutes = moment.utc(d.datetime).format("mm")
+            reservations.push(hours + ":" + minutes);
+          }
+          reservations.sort();
+          console.log(reservations);
+          exit(0);
       }).catch(function (error) {
-          console.log("Something went wrong")
+          console.log("Something went wrong");
+          exit(0);
       });
       rl.close();
     });
