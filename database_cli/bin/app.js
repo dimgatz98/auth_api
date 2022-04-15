@@ -135,6 +135,7 @@ yargs.command({
     handler(argv) {
         const datetime = argv.datetime;
         if (!validateDatetime(datetime) ) {
+            console.log("Invalid datetime");
             exit(0);
         }
         pool.query(`select datetime from ${db}.schedule where datetime=?`, [datetime], (err, results) => {
